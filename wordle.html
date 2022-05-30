@@ -50,26 +50,34 @@
         <div class="input-container">
             <input type="text" maxlength="5" minlength="5">
             <button>Enter!</button>
+            <button id ="reset">Reset</button>
         </div>
         <p id="game-over"></p>
     </div>
 </div>
 </body>
 <script>
-    const answer = "SPACE";
+    let answerList = ["SPACE", "CHURN", "SMART", "SNARE", "ADIEU", "AMONG", "GNOME", "SOUND"]
+    let random = Math.floor(Math.random()*answerList.length);
+    const answer = answerList[random];
     const board = document.getElementById('board');
     const textBox = document.querySelector('input');
     const submitButton = document.querySelector('button');
+    const resetButton = document.getElementById('reset');
     const gameOverMessage = document.getElementById('game-over');
 
     let currentGuessNumber = 0
+
+    resetButton.addEventListener('click', function(e){
+        location.reload()
+    });
 
     submitButton.addEventListener('click', function(e){
         let guess = textBox.value;
         if (guess.length !== 5){
             return
         }
-        //todo
+        textBox.value = '';
 
         //render
         writeGuess(guess) //todo
@@ -92,7 +100,7 @@
     })
 
     function writeGuess(guess){
-        let matchArray = buildMatchArray(guess) //todo
+        let matchArray = buildMatchArray(guess)
 
         let currentGuessRow = board.children[currentGuessNumber];
         let columns = currentGuessRow.children
@@ -114,7 +122,7 @@
         guess = guess.toUpperCase();
         let answerAsArray = [];
         let matchArray = [0, 0, 0, 0, 0];
-        for (let i = 0; i <answer.length; i++){
+        for (let i = 0; i < answer.length; i++){
             let letter = answer[i].toUpperCase();
             answerAsArray.push(letter);
         }
@@ -141,5 +149,6 @@
         return matchArray
 
     }
+
 </script>
 </html>
